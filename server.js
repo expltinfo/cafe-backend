@@ -5,6 +5,11 @@ const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const crypto = require('crypto');
 
+// Validate required env vars at startup
+const required = ['GMAIL_USER','GMAIL_APP_PASSWORD','TWILIO_ACCOUNT_SID','TWILIO_AUTH_TOKEN','TWILIO_PHONE'];
+const missing = required.filter(k => !process.env[k]);
+if (missing.length) console.warn('⚠️  Missing env vars:', missing.join(', '));
+
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
